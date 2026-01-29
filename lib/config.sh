@@ -371,7 +371,7 @@ get_profile_ml() {
 get_profile_homebrew() {
     local packages=$(get_profile_packages "homebrew")
     if [[ -n "$packages" ]]; then
-        echo "RUN apt-get update && apt-get install --no-install-recommends -y $packages && apt-get clean"
+        echo "RUN apt-get update && apt-get install -y $packages && apt-get clean"
     fi
     cat << 'EOF'
 USER claude
