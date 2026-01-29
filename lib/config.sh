@@ -381,7 +381,6 @@ RUN /bin/bash -c "$(curl -fL https://raw.githubusercontent.com/Homebrew/install/
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
 
 USER root
-
 EOF
 }
 
