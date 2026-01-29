@@ -35,6 +35,7 @@ get_profile_packages() {
         datascience) echo "r-base" ;;
         security) echo "nmap tcpdump wireshark-common netcat-openbsd john hashcat hydra" ;;
         ml) echo "" ;;  # Just cmake needed, comes from build-tools now
+        homebrew) echo "build-essential curl file procps locales" ;; 
         *) echo "" ;;
     esac
 }
@@ -62,12 +63,13 @@ get_profile_description() {
         datascience) echo "Data Science (Python, Jupyter, R)" ;;
         security) echo "Security Tools (scanners, crackers, packet tools)" ;;
         ml) echo "Machine Learning (build layer only; Python via uv)" ;;
+        homebrew) echo "Package Manager" ;; 
         *) echo "" ;;
     esac
 }
 
 get_all_profile_names() {
-    echo "core build-tools shell networking c openwrt rust python go flutter javascript java ruby php database devops web embedded datascience security ml"
+    echo "core build-tools shell networking c openwrt rust python go flutter javascript java ruby php database devops web embedded datascience security ml homebrew"
 }
 
 profile_exists() {
@@ -83,6 +85,7 @@ expand_profile() {
         c) echo "core build-tools c" ;;
         openwrt) echo "core build-tools openwrt" ;;
         ml) echo "core build-tools ml" ;;
+        homebrew) echo "core homebrew" ;;
         rust|go|flutter|python|php|ruby|java|database|devops|web|embedded|datascience|security|javascript)
             echo "core $1"
             ;;
@@ -364,6 +367,22 @@ get_profile_ml() {
     # ML profile just needs build tools which are dependencies
     echo "# ML profile uses build-tools for compilation"
 }
+
+get_profile_homebrew() {
+    local packages=$(get_profile_packages "homebrew")
+    if [[ -n "$packages" ]]; then
+        echo "RUN apt-get update && apt-get install --no-install-recommends -y $packages && apt-get clean"
+    fi
+    cat << 'EOF'
+# Run the Homebrew installation script
+RUN yes | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Add Homebrew to the PATH environment variable
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
+
+EOF
+}
+
 
 export -f _read_ini get_profile_packages get_profile_description get_all_profile_names profile_exists expand_profile
 export -f get_profile_file_path read_config_value read_profile_section update_profile_section get_current_profiles
