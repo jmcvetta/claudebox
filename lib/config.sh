@@ -63,7 +63,7 @@ get_profile_description() {
         datascience) echo "Data Science (Python, Jupyter, R)" ;;
         security) echo "Security Tools (scanners, crackers, packet tools)" ;;
         ml) echo "Machine Learning (build layer only; Python via uv)" ;;
-        homebrew) echo "Package Manager" ;;
+        homebrew) echo "Homebrew Package Manager" ;;
         *) echo "" ;;
     esac
 }
