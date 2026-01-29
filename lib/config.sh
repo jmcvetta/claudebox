@@ -391,5 +391,4 @@ export -f get_profile_file_path read_config_value read_profile_section update_pr
 export -f get_profile_core get_profile_build_tools get_profile_shell get_profile_networking get_profile_c get_profile_openwrt
 export -f get_profile_rust get_profile_python get_profile_go get_profile_flutter get_profile_javascript get_profile_java get_profile_ruby
 export -f get_profile_php get_profile_database get_profile_devops get_profile_web get_profile_embedded get_profile_datascience
-export -f get_profile_security get_profile_ml 
-export -f get_profile_homebrew
+export -f get_profile_security get_profile_ml get_profile_homebrew
