@@ -35,7 +35,7 @@ get_profile_packages() {
         datascience) echo "r-base" ;;
         security) echo "nmap tcpdump wireshark-common netcat-openbsd john hashcat hydra" ;;
         ml) echo "" ;;  # Just cmake needed, comes from build-tools now
-        homebrew) echo "build-essential curl file procps locales" ;;
+        homebrew) echo "build-essential curl file procps" ;;
         *) echo "" ;;
     esac
 }
