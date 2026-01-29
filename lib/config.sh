@@ -374,11 +374,23 @@ get_profile_homebrew() {
         echo "RUN apt-get update && apt-get install --no-install-recommends -y $packages && apt-get clean"
     fi
     cat << 'EOF'
-# Run the Homebrew installation script
-RUN yes | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Create a non-root user to own brew
+RUN useradd -m -s /bin/bash linuxbrew
 
-# Add Homebrew to the PATH environment variable
+# Switch to brew user
+USER linuxbrew
+
+# Install brew
+RUN /bin/bash -c "$(curl -fL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Put brew on PATH for subsequent layers and for runtime shells
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
+
+# If you need to use brew in later RUN steps, do it after PATH is set:
+RUN brew --version && brew update
+
+# Final container runs as root again
+USER root
 
 EOF
 }
