@@ -379,6 +379,7 @@ USER claude
 # Homebrew does not publish versioned releases of its install script
 RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
+RUN brew --version  # Confirm installation
 
 USER root
 EOF
