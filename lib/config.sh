@@ -35,7 +35,7 @@ get_profile_packages() {
         datascience) echo "r-base" ;;
         security) echo "nmap tcpdump wireshark-common netcat-openbsd john hashcat hydra" ;;
         ml) echo "" ;;  # Just cmake needed, comes from build-tools now
-        homebrew) echo "build-essential curl file procps locales" ;; 
+        homebrew) echo "build-essential curl file procps locales" ;;
         *) echo "" ;;
     esac
 }
@@ -63,7 +63,7 @@ get_profile_description() {
         datascience) echo "Data Science (Python, Jupyter, R)" ;;
         security) echo "Security Tools (scanners, crackers, packet tools)" ;;
         ml) echo "Machine Learning (build layer only; Python via uv)" ;;
-        homebrew) echo "Package Manager" ;; 
+        homebrew) echo "Package Manager" ;;
         *) echo "" ;;
     esac
 }
@@ -376,15 +376,14 @@ get_profile_homebrew() {
     cat << 'EOF'
 USER claude
 
+# Homebrew does not publish versioned releases of its install script
 RUN /bin/bash -c "$(curl -fL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
-RUN brew update
 
 USER root
 
 EOF
 }
-
 
 export -f _read_ini get_profile_packages get_profile_description get_all_profile_names profile_exists expand_profile
 export -f get_profile_file_path read_config_value read_profile_section update_profile_section get_current_profiles
